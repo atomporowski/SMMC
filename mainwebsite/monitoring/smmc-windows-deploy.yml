@@ -1,0 +1,33 @@
+---
+- name: Manage windows servers
+  hosts: all
+  tasks:
+  - name: Create working directory
+    ansible.windows.win_file:
+      path: C:\SMMC
+      state: directory
+  - name: Copy monitoring script
+    ansible.windows.win_copy:
+      src: client.py
+      dest: C:\SMMC
+  - name: Copy config file
+    ansible.windows.win_copy:
+      src: monitoring.txt
+      dest: C:\SMMC
+  - name: Install NSSM (service manager)
+    win_chocolatey:
+      name: nssm
+      state: latest
+  - name: Install python
+    win_chocolatey:
+      name: python3
+      version: 3.10.0
+  - name: Install modules
+    ansible.windows.win_command: pip install psutil
+  - name: Install service
+    ansible.windows.win_command: nssm install "SMMC_client" "C:\Python310\python.exe" "C:\SMMC\client.py"
+    ignore_errors: yes
+  - name: Start monitoring service
+    ansible.windows.win_command: nssm start "SMMC_client"
+    ignore_errors: yes
+

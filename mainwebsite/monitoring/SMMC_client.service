@@ -1,0 +1,10 @@
+[Unit]
+Description = SMMC monitoring script for client nodes
+
+[Install]
+WantedBy = multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /SMMC/client.py

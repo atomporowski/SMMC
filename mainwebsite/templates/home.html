@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %} SMMC HOME {% endblock %}
+{% block content %}
+
+<div class="title_container home-title">
+    <h1 class="darkgrey"> SERVER MONITORING AND MANAGEMENT SYSTEM </h1>
+</div>
+<div class="home-site">
+    <div class="home-section">
+        <div class="home-section-details">
+            <img src="../static/img/reports.png" class="img-home img-home-left">
+        </div>
+        <div class="home-section-details">
+            <h1 class="darkgrey home-banners">CHECK CURRENT VALUES</h1>
+        </div>
+    </div>
+    <div class="home-section">
+        <div class="home-section-details">
+            <h1 class="darkgrey home-banners">AUTOMATICALLY SCAN YOUR NETWORK</h1>
+        </div>
+        <div class="home-section-details">
+            <img src="../static/img/assets.png" class="img-home img-home-right">
+        </div>
+    </div>
+    <div class="home-section">
+        <div class="home-section-details">
+            <img src="../static/img/config.png" class="img-home img-home-left">
+        </div>
+        <div class="home-section-details">
+            <h1 class="darkgrey home-banners">CONVENIENT CONFIGURATION</h1>
+        </div>
+    </div>
+    <div class="home-section">
+        <div class="home-section-details">
+            <h1 class="darkgrey home-banners">REMOTE MONITORING SERVICES INSTALL</h1>
+        </div>
+        <div class="home-section-details">
+            <img src="../static/img/ansible.png" class="img-home img-home-right">
+        </div>
+    </div>
+    <div class="home-section">
+        <div class="home-section-details">
+            <img src="../static/img/jira.png" class="img-home img-home-left">
+        </div>
+        <div class="home-section-details">
+            <h1 class="darkgrey home-banners">AUTOMATIC TICKETS TO JIRA</h1>
+        </div>
+    </div>
+    <div class="home-section">
+        <div class="home-section-details">
+            <h1 class="darkgrey home-banners">YOU WANNA KNOW SMMC BETTER?</h1>
+        </div>
+        <div class="home-section-details">
+            <form action="/base/download" method="GET">
+                <button type="submit" class="btn-green btn btn-primary btn-lg btn-block">DOWNLOAD MANUAL</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

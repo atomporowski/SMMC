@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}SMMC REPORTS{% endblock %}
+{% block content %}
+<meta http-equiv="refresh" content="60">
+<div class="title_container">
+    <h1> REPORTS </h1>
+</div>
+
+<div class="reports-site">
+    <div class="report-section">
+        {%if devices%}
+
+        <table class="reports-table">
+            <thead>
+            <tr>
+                <th>Hostname</th>
+                <th>Server IP</th>
+                <th>Boot time</th>
+                <th>CPU percent</th>
+                <th>Memory percent</th>
+                <th>Virtual memory</th>
+                <th>Avg Load</th>
+                <th>Timestamp</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for device in devices %}
+
+            <tr>
+                <td><img src="{{ url_for('static', filename='img/' + device['os']|lower + '.png') }}" width="22"
+                         height="22">
+                    <a href="reports/{{device['hostname']}}">{{device['hostname']}}</a></td>
+                <td>{{device['ip']}}</td>
+                <td>{{device['boot_time']}}</td>
+                <td class="high_threshold" >{{ '%0.1f' % device['cpu_percent']|float }}</td>
+                <td class="high_threshold" >{{ '%0.1f' % device['memory_percent']|float }}</td>
+                <td class="high_threshold" >{{ '%0.1f' % device['virtual_mem']|float }}</td>
+                <td class="low_threshold" >{{ '%0.1f' % device['avg_load']|float }}</td>
+                <td class="timestamp" >{{device['timestamp']}}</td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+        {%endif%}
+
+    </div>
+</div>
+{% endblock %}

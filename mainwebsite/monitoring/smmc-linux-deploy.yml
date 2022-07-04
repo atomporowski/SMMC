@@ -1,0 +1,50 @@
+---
+- name: Setup environment for SMMC monitoring
+  hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+   - name: Install systemd
+     apt:
+       name: systemd
+       state: present
+   - name: Create working directory
+     file:
+       name: /SMMC
+       state: directory
+       recurse: yes
+   - name: Copy monitoring script
+     copy:
+       src: client.py
+       dest: /SMMC
+       mode: 0777
+   - name: Copy service file
+     copy:
+       src: SMMC_client.service
+       dest: /etc/systemd/system/
+       mode: 0777
+   - name: Copy config file
+     copy:
+       src: monitoring.txt
+       dest: /SMMC
+       mode: 0777
+   - name: Install python
+     apt:
+       name: python3
+       state: latest
+   - name: Install pip
+     package:
+       name: python3-pip
+       state: present
+   - name: Install psutil
+     raw: pip install psutil
+   - name: Enable monitoring service
+     ansible.builtin.systemd:
+       name: SMMC_client.service
+       enabled: yes
+   - name: Start monitoring service
+     ansible.builtin.systemd:
+       name: SMMC_client.service
+       state: started
+

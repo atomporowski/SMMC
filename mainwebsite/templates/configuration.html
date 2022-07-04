@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %} Configuration {% endblock %}
+{% block content %}
+
+<div class="title_container">
+    <h1>CONFIGURATION</h1>
+</div>
+<div class="configuration-site">
+    <div class="configuration-section configuration-background-color-left">
+        <div class="configuration-form">
+            <form action="./configuration" method="POST">
+                <h3>Server Configuration</h3>
+                <br/>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            required="required"
+                            id="ip_address"
+                            name="ip_address"
+                            placeholder="Network IP (e.g. 192.168.1.1)"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            required="required"
+                            id="admin_login"
+                            name="admin_login"
+                            placeholder="Login for the service account"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <input
+                            type="password"
+                            class="form-control"
+                            required="required"
+                            id="admin_password"
+                            name="admin_password"
+                            placeholder="Password for the service account"
+                    />
+                </div>
+                <br/>
+                <button type="submit" class="btn-green btn btn-primary btn-lg btn-block">
+                    {% if not curr_config or curr_config['network_ip'] == 'No data entered' or curr_config['adm_login'] == 'No data entered' or curr_config['adm_pass'] == 'No data entered' %}Submit{% else %}Update server config{% endif %}
+                </button>
+            </form>
+        </div>
+        <div class="configuration-form">
+
+            <form action="./configuration/deleteserverconf" method="POST">
+                <button type="submit" class="btn-red btn btn-primary btn-lg btn-block">Reset server config</button>
+            </form>
+        </div>
+        <div class="config-settings">
+            {% if curr_config %}
+            <h3> Your current server config is:</h3>
+            <table class="config-table">
+                <thead>
+                <tr>
+                    <th>Network address</th>
+                    <th>Admin login</th>
+                    <th>Admin password</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{curr_config['network_ip']}}</td>
+                    <td>{{curr_config['adm_login']}}</td>
+                    <td>{{curr_config['adm_pass']}}</td>
+                </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+    <div class="configuration-section configuration-background-color-right">
+        <div class="configuration-form">
+            <form action="./configuration/emailsenderconf" method="POST">
+                <h3>Alert sender Configuration</h3>
+                <br/>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            required="required"
+                            id="email_account"
+                            name="email_account"
+                            placeholder="E-mail which sends notifications"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <input
+                            type="password"
+                            class="form-control"
+                            required="required"
+                            id="email_account_password"
+                            name="email_account_password"
+                            placeholder="Password for e-mail account"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            required="required"
+                            id="smtp_email_account"
+                            name="smtp_email_account"
+                            placeholder="SMTP address (e.g. smtp.gmail.com)"
+                    />
+                </div>
+                <div class="form-group">
+                    <input
+                            type="number"
+                            class="form-control"
+                            required="required"
+                            id="email_account_port"
+                            name="email_account_port"
+                            placeholder="Port number (e.g. for gmail it is 587)"
+                            maxlength="5"
+                    />
+                </div>
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            required="required"
+                            id="monitoring_server_ip"
+                            name="monitoring_server_ip"
+                            placeholder="Monitoring server IP (e.g. 192.168.1.1)"
+                            maxlength="15"
+                    />
+                </div>
+                <br/>
+                <button type="submit" class="btn-green btn btn-primary btn-lg btn-block">
+                    {% if not curr_config or curr_config['email_account'] == 'No data entered' or curr_config['email_account_password'] == 'No data entered' or curr_config['smtp_email_account'] == 'No data entered' or curr_config['email_account_port'] == 'No data entered' %}Submit{% else %}Update e-mail config{% endif %}
+
+                </button>
+            </form>
+        </div>
+        <div class="configuration-form">
+
+            <form action="./configuration/deletemailconf" method="POST">
+                <button type="submit" class="btn-red btn btn-primary btn-lg btn-block">Reset e-mail config</button>
+            </form>
+        </div>
+        <div class="config-settings">
+            {% if curr_config %}
+            <h3> Your current e-mail sender config is:</h3>
+            <table class="config-table">
+                <thead>
+                <tr>
+                    <th>E-mail Account</th>
+                    <th>E-mail Account Password</th>
+                    <th>SMTP for E-mail Account</th>
+                    <th>E-mail Account Port</th>
+                    <th>Monitoring Server IP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{curr_config['email_account']}}</td>
+                    <td>{% if curr_config['email_account_password']%}Password hidden {% else %}
+                    Password has not been entered{% endif %}</td>
+                    <td>{{curr_config['smtp_email_account']}}</td>
+                    <td>{{curr_config['email_account_port']}}</td>
+                    <td>{{curr_config['monitoring_server_ip']}}</td>
+                </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

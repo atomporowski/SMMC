@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='static.css')}}">-->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/cc566aa0c2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.css') }}"/>
+    <title>{% block title %} SMMC {% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+    <!--These are old bootstrap connections, may be needed later-->
+    <!--    <link-->
+    <!--            rel="stylesheet"-->
+    <!--            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"-->
+    <!--            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"-->
+    <!--            crossorigin="anonymous"-->
+    <!--    />-->
+    <!--    <link-->
+    <!--            rel="stylesheet"-->
+    <!--            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"-->
+    <!--            crossorigin="anonymous"-->
+    <!--    />-->
+
+
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="hamburger">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </div>
+    <div class="logo-menu-container">
+        <div class="logo">
+            <a href="#top"><img src="{{ url_for('static', filename='img/logo.jpg') }}" class="logo-img" alt="logo"/></a>
+        </div>
+        <div class="menu-container">
+            <nav class="nav">
+                <ul>
+                    <li class="hamburger-li"><a id="home" href="/">HOME</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="hamburger-li"><a id="assets" href="/assets">ASSETS</a></li>
+                    <li class="hamburger-li"><a id="reports" href="/reports">REPORTS</a></li>
+                    <li class="hamburger-li"><a id="configuration" href="/configuration">CONFIGURATION</a></li>
+                    <li class="hamburger-li"><a id="logout" href="/logout">LOGOUT({{current_user['first_name']}} {{current_user['last_name']}})</a></li>
+                    {% else %}
+                    <li class="hamburger-li"><a id="login" href="/login">LOGIN</a></li>
+                    <li class="hamburger-li"><a id="signUp" href="/sign_up">SIGN UP</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash_messages"><h3 class="flash-message">
+    {{ message }}
+    </h3></div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+</header>
+<main>
+    <div class="container section">
+        {% block content %} {% endblock %}
+    </div>
+</main>
+<footer id="contact" class="footer-contact">
+    <div class="contact">
+        <div class="column-container">
+            <div class="section-title">
+                <h2 class="center-align">CONTACT</h2>
+            </div>
+            <div class="contact">
+                <div class="contact-container">
+                    <h3><i class="fas fa-mobile-phone"></i>801 801 801</h3><br/>
+                    <h3><i class="fas fa-at"></i><a href="mailto:servermmcenter@gmail.com">servermmcenter@gmail.com</a>
+                    </h3>
+                </div>
+                <div class="contact-container">
+                    <div class="contact-form">
+                        <form action="/base" method="POST">
+                            <div class="section-contact-title"><h3>Any questions? Let us know</h3></div>
+                            <div class="form-group">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="first_name"
+                                        name="first_name"
+                                        required="required"
+                                        placeholder="First name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="last_name"
+                                        name="last_name"
+                                        required="required"
+                                        placeholder="Last name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        required="required"
+                                        placeholder="E-mail"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <textarea
+                                        cols="2"
+                                        rows="2"
+                                        class="form-control-message form-control"
+                                        id="message"
+                                        required="required"
+                                        placeholder="Your message..."
+                                        name="message"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-inline"><input type="checkbox" required="required"><span
+                                        class="processing">
+                                    I agree to the processing of my personal data in order to handle the
+                                    question.</span></label>
+                            </div>
+                            <button type="submit" class="btn-green btn btn-primary btn-lg btn-block">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script
+        type="text/javascript"
+        src="{{ url_for('static', filename='script/script.js') }}"
+></script>
+</body>
+</html>

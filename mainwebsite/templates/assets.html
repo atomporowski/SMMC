@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %} Assets {% endblock %}
+{% block content %}
+
+<div class="title_container">
+    <h1>ASSETS</h1>
+</div>
+<div class="ip-section">
+    <form action="/scan">
+        <button type="submit" class="btn-green btn btn-primary btn-lg btn-block">SCAN</button>
+    </form>
+</div>
+<div class="ip-section">
+    {% if servers %}
+    <h3>We have discovered the below devices in your network:</h3>
+    <table class="ip-table">
+        <thead>
+        <tr>
+            <th><h4>ID</h4></th>
+            <th><h4>IP Addresses</h4></th>
+            <th><h4>Option</h4></th>
+        </tr>
+        </thead>
+        {% for server in servers %}
+        <tr>
+            <td>{{server['id']}}</td>
+            <td>{{server['server_ip']}}</td>
+            <td><a href="{{url_for('assets.delete', id=server.id)}}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+<div class="ip-section">
+    <form action="assets/makeserversfile">
+        <button type="submit" class="btn-red btn btn-primary btn-lg btn-block">SAVE SERVERS FOR ANSIBLE</button>
+    </form>
+</div>
+<div class="ip-section">
+    <form action="assets/openconfigfile">
+        <button type="submit" class="btn-green btn btn-primary btn-lg btn-block">OPEN CONFIG FILE FOR ANSIBLE</button>
+    </form>
+    <form action="assets/deleteconfigfile">
+        <button type="submit" class="btn-warn btn-green btn btn-primary btn-lg btn-block">DELETE CONFIG FILE</button>
+    </form>
+</div>
+<div class="ip-section">
+    <form action="/assets/addserver" method="POST">
+        <div class="form-group">
+            <input
+                    type="text"
+                    class="form-control"
+                    required="required"
+                    id="single_server"
+                    name="single_server"
+                    placeholder="Monitoring server IP (e.g. 192.168.1.1)"
+                    maxlength="15"
+            />
+        </div>
+        <button type="submit" class="btn-red btn btn-primary btn-lg btn-block">ADD OTHER SERVER</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}SMMC REPORTS{% endblock %}
+{% block content %}
+
+<div class="title_container">
+    <h1> {{device}} details </h1>
+</div>
+<div>
+    <embed  src={{ cpu_usage|safe }} />
+    <embed  src={{ memory_usage|safe }} />
+    <embed  src={{ virtual_mem_usage|safe }} />
+    <embed  src={{ avg_load|safe }} />
+</div>
+
+{% endblock %}
